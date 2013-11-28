@@ -255,10 +255,11 @@ if clusterDetails.iso_dists(1) > 2
                 end
             end
             
+               %             init_comp_idx = clusterDetails.comp_idx;
+            %             init_comp_idx = init_comp_idx + length(back_clust_labels);
+            %             init_comp_idx(cur_back_spikes) = back_comp_idx;
+            
             init_comp_idx = clusterDetails.comp_idx;
-            init_comp_idx = init_comp_idx + length(back_clust_labels);
-            init_comp_idx(cur_back_spikes) = back_comp_idx;
-            [~,~,init_comp_idx] = unique(init_comp_idx); %bug fixed 11-15-13 
             
             init_cluster_labels = clusterDetails.cluster_labels;
             init_cluster_labels(init_cluster_labels == 1) = [];

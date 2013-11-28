@@ -23,7 +23,7 @@ end
 data_dir = [data_loc Expt_name];
 
 %location of Expts.mat files
-data_dir2 = ['/smr/lem/' Expt_name];
+data_dir2 = ['/Volumes/bgc6/smr/lem/' Expt_name];
 
 Vloaded = nan;
 %% LOOK AT DURATION OF EACH EXPERIMENT BLOCK AS A WAY TO PICK A SET OF BASE BLOCKS FOR INITIAL CLUSTERING
@@ -104,7 +104,7 @@ for bb = 1:length(poss_base_blocks) %loop over initial set of blocks
         save(second_dat_name,'Clusters');
         
         %save unit cluster plot
-        fillPage(sum_fig,'papersize',[14 8]);
+        %fillPage(sum_fig,'papersize',[14 8]);
         pname = [init_save_dir sprintf('/Probe%d_Block%d_initclust',probe_num,cur_base_block)];
         print(sum_fig,pname,'-dpng');
         close(sum_fig);
@@ -126,7 +126,7 @@ for bb = 1:length(poss_base_blocks) %loop over initial set of blocks
         
     end
     
-    fillPage(all_probe_fig,'papersize',[14 14]);
+    %fillPage(all_probe_fig,'papersize',[14 14]);
     pname = [base_save_dir sprintf('/Allprobe_Block%d_scatter',cur_base_block)];
     print(all_probe_fig,pname,'-dpng');
     close(all_probe_fig);
@@ -142,9 +142,13 @@ for bb = 1:length(poss_base_blocks) %loop over initial set of blocks
 %     pname = [base_save_dir sprintf('/Allprobe_Block%d_quality',cur_base_block)];
 %     print(pname,'-dpng');
 %     close(gcf);
+    if ~isempty(Clusters{1}) %really a job for CellToMat
+        block_all_dprimes(bb,:) = cellfun(@(x) x.dprime,Clusters);
+    end
     
-    block_all_dprimes(bb,:) = cellfun(@(x) x.dprime,Clusters);
-    
+end
+if ~isempty(Clusters{1}) %Didn't do all
+    return;
 end
 
 %% INITIALIZE REF CLUSTERS
