@@ -260,7 +260,13 @@ if clusterDetails.iso_dists(1) > 2
             %             init_comp_idx(cur_back_spikes) = back_comp_idx;
             
             init_comp_idx = clusterDetails.comp_idx;
-            
+            uids = init_comp_idx <= 0;
+            buids = back_comp_idx <= 0;
+            cuids = setdiff(1:N_spks,[uids; cur_back_spikes(buids)]);
+            init_comp_idx = init_comp_idx + length(back_clust_labels);
+            init_comp_idx(cur_back_spikes) = back_comp_idx;
+            [~,~,init_comp_idx(cuids)] = unique(init_comp_idx(cuids)); %bug fixed 11-15-13
+         
             init_cluster_labels = clusterDetails.cluster_labels;
             init_cluster_labels(init_cluster_labels == 1) = [];
             init_cluster_labels = [back_clust_labels init_cluster_labels + 1];

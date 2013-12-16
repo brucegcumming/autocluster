@@ -42,6 +42,7 @@ if isempty(Spikes)
     
     % artifact detection
     artifact_ids = find_spike_artifacts(Spikes,params);
+    uids = 1:length(Spikes.V);
     Spikes.V(artifact_ids,:,:) = [];
     Spikes.times(artifact_ids) = [];
     Spikes.trig_vals(artifact_ids) = [];
